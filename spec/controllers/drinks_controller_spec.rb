@@ -18,9 +18,21 @@ describe DrinksController do
           it 'renders the correct information' do
             @drink = Drink.create(alcohol: "gin", mixer: "tonic", finish: "lime", over_ice: true, top_shelf: true, price: 8)
 
+            get 'index', format: 'json'
+
             @drinks = Drink.all
 
-            drink = JSON.parse(response.body)
+            puts "**********************************"
+            puts response.body
+            puts "**********************************"
+
+            # Use sample JSON to test parser instead of response.body:
+            # stuff = "{\"drinks\":[{\"id\":1,\"drink_name\":\"vodka and lime\",\"drink_price\":\"$9.00\",\"is_fancy\":false,\"url\":\"http://localhost:3000/drinks/1.json\"}]}"
+            drink = JSON.parse(response.body)['drinks'][0]
+          
+            puts "**********************************"
+            puts drink
+            puts "**********************************"
             expect(drink['id']).to eq @drink.id
             expect(drink['drink_name']).to eq @drink.drink_name
             expect(drink['drink_price']).to eq @drink.drink_price
@@ -28,24 +40,27 @@ describe DrinksController do
           end  
       # Test #3    
       it 'give back one drink in show' do
-         drink = JSON.parse(response.body)
-         expect(drink.count).to eq(1)
+          @drink = Drink.create(alcohol: "gin", mixer: "tonic", finish: "lime", over_ice: true, top_shelf: true, price: 8)
+
+          get 'show', format: 'json', id: @drink.id
+
+          drink = JSON.parse(response.body)
+          expect(drink.count).to eq 1
       end
 
       # Test #4
       it 'renders the correct view information' do
-        @drink = Drink.create(alcohol: "gin", mixer: "tonic", finish: "lime", over_ice: true, top_shelf: true, price: 12)
-        get 'show', id: @drink.id, format: 'json'
-        drink = JSON.parse(response.body)['drinks']
-        expect([drink][0]['id']).to eq @drink.id
-        # expect(drink['drink_name']).to eq @drink.drink_name
-        # expect(drink['drink_price']).to eq @drink.drink_price
-        # expect(drink['alcohol']).to eq @drink.alcohol
-        # expect(drink['mixer']).to eq @drink.mixer
-        # expect(drink['finish']).to eq @drink.finish
-        # expect(drink['over_ice']).to eq @drink.over_ice
-        # expect(drink['top_shelf']).to eq @drink.top_shelf
-        # expect(drink['is_fancy']).to eq @drink.top_shelf
+            @drink = Drink.create(alcohol: "gin", mixer: "tonic", finish: "lime", over_ice: true, top_shelf: true, price: 8)
+
+            get 'show', format: 'json', id: @drink.id
+
+            # Use sample JSON to test parser instead of response.body:
+            # stuff = "{\"drinks\":[{\"id\":1,\"drink_name\":\"vodka and lime\",\"drink_price\":\"$9.00\",\"is_fancy\":false,\"url\":\"http://localhost:3000/drinks/1.json\"}]}"
+            drink = JSON.parse(response.body)['drink']
+            expect(drink['id']).to eq @drink.id
+            expect(drink['drink_name']).to eq @drink.drink_name
+            expect(drink['drink_price']).to eq @drink.drink_price
+            expect(drink['is_fancy']).to eq @drink.is_fancy
       end
 
     end
@@ -57,13 +72,13 @@ describe DrinksController do
           end
 
           # Test #6
-          it "assigns all things to @drinks" do
+          it "render @drinks" do
             @drinks = Drink.all
 
             get 'index'
 
             response.should be_success
-            expect(@drinks).to eq Drink.all
+            expect(assigns[:drinks]).to eq @drinks
           end
 
           # Test #7
@@ -73,11 +88,11 @@ describe DrinksController do
           end
 
           # Test #8
-          it "finds a Drink and sets it to @drink" do
-            g = Drink.create(alcohol: "gin", mixer: "tonic", finish: "lime", over_ice: true, top_shelf: true, price: 12)        
-            get 'show', id: g.id
+          it "render :show template for a Drink" do
+            @drink = Drink.create(alcohol: "gin", mixer: "tonic", finish: "lime", over_ice: true, top_shelf: true, price: 9)        
+            puts @drink.id
+            get 'show', id: @drink.id, format: 'html' 
             response.should be_success
-            expect(@drink).to eq g
           end
     end
   end
