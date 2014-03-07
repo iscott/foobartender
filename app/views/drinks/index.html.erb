@@ -1,0 +1,41 @@
+<h1>FooBartender, Please</h1>
+
+<h2 class="unfancy">Regular Drinks</h2>
+<div id="drinks"></div>
+<script id="drink-template" type="text/x-handlebars-template">
+	<div class="row">
+	  {{#each drinks}}
+	  	{{#if is_fancy}}
+	  	{{else}}
+		   <a href="http://localhost:3000/drinks/{{id}}">
+		     <div class="container small-12 large-3 columns">
+		        <h2>{{drink_name}}</h2>
+		        <p>{{drink_price}}</p>
+		      </div>
+		    </a>
+	    {{/if}}
+	  {{/each}}
+	</div>
+</script>
+
+<h2 class="fancy">Fancy Drinks</h2>
+<div id="fancy-drinks"></div>
+<script id="fancy-drink-template" type="text/x-handlebars-template">
+	<div class="row">
+	  {{#each drinks}}
+	  	{{#if is_fancy}}
+		   <a href="http://localhost:3000/drinks/{{id}}">
+		     <div class="container small-12 large-3 columns">
+		        <h2>{{drink_name}}</h2>
+		        <p>{{drink_price}}</p>
+		      </div>
+		    </a>
+	    {{else}}
+	    {{/if}}
+	  {{/each}}
+	 </div>
+</script>
+
+
+<script>$(function() { loadDrinks(); });</script>
+<script>$(function() { loadFancyDrinks(); });</script>

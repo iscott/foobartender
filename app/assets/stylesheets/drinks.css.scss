@@ -1,0 +1,25 @@
+// Place all the styles related to the drinks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import url(http://fonts.googleapis.com/css?family=Sue+Ellen+Francisco|Arizonia);
+
+h1, h2 {
+	text-align: center;
+}
+
+.fancy {
+	font-family: 'Arizonia', cursive;
+}
+
+.unfancy{
+	font-family: 'Sue Ellen Francisco', cursive;
+}
+
+.container {
+	border: 1px solid #ddd;
+	border-bottom-right-radius:2em;
+	border-bottom-left-radius:2em;
+	text-align: center;
+	min-height: 200px;
+}
+

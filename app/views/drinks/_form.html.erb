@@ -1,0 +1,41 @@
+<%= form_for(@frink) do |f| %>
+  <% if @frink.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@frink.errors.count, "error") %> prohibited this frink from being saved:</h2>
+
+      <ul>
+      <% @frink.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :alcohol %><br>
+    <%= f.text_field :alcohol %>
+  </div>
+  <div class="field">
+    <%= f.label :mixer %><br>
+    <%= f.text_field :mixer %>
+  </div>
+  <div class="field">
+    <%= f.label :finish %><br>
+    <%= f.text_field :finish %>
+  </div>
+  <div class="field">
+    <%= f.label :over_ice %><br>
+    <%= f.check_box :over_ice %>
+  </div>
+  <div class="field">
+    <%= f.label :top_shelf %><br>
+    <%= f.check_box :top_shelf %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br>
+    <%= f.number_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
